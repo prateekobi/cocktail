@@ -30,12 +30,18 @@ class RecipesController < ApplicationController
   def update
     @recipe = Recipe.find(params[:id])
     if @recipe.update(recipe_params)
-      #do something
       flash[:success] = "Cocktail updated successfully"
       redirect_to recipe_path(@recipe)
     else
       render :edit
     end
+  end
+
+  def like
+    @recipe = Recipe.find(params[:id])
+    Like.create(like: params[:like], barmen: Barmen.first, recipe: @recipe)
+    flash[:success] = "Your slesction was successful"
+    redirect_to :back
   end
 
   private
