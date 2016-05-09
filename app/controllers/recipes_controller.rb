@@ -1,7 +1,7 @@
 class RecipesController < ApplicationController
 
   def index
-    @recipes = Recipe.all
+    @recipes = Recipe.all.sort_by{|likes| likes.thumbs_up_total}.reverse
   end
 
   def show
@@ -39,9 +39,14 @@ class RecipesController < ApplicationController
 
   def like
     @recipe = Recipe.find(params[:id])
-    Like.create(like: params[:like], barmen: Barmen.first, recipe: @recipe)
+    like = Like.create(like: params[:like], barmen: Barmen.first, recipe: @recipe)
+    if like.valid?
     flash[:success] = "Your slesction was successful"
     redirect_to :back
+  else
+    flash[:danger] = "You can only like/dislike once"
+    redirect_to :back
+  end
   end
 
   private
