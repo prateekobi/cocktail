@@ -5,9 +5,11 @@
       <div class="row">
         <div class="col-md-2">
           <section class="barmen_info center">
-
+            <%= gravatar_for recipe.barmen, size: 100 %>
+            <h5>Barmen name: <%= recipe.barmen.barmenname %></h5>
           </section>
         </div>
+
         <div class="col-lg-8 well">
           <h4><%= link_to recipe.name, '' %></h4>
           <p><%= recipe.summary %></p>
@@ -18,4 +20,5 @@
           </p>
         </div>
       </div>
+      <hr/>
     <% end %>
